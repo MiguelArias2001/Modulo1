@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bienvenido {{users.nombre}}</title>
+    {% load static %}
+    <!-- font icons -->
+    <link rel="stylesheet" href="{%static 'vendors/themify-icons/css/themify-icons.css'%}">
+    <!-- Bootstrap + Steller  -->
+    <link rel="stylesheet" href="{%static 'css/foodhut.css'%}">
+</head>
+<body>
+	<table class="table">
+		<tr>
+			<th scope="col">Código</th>
+			<th scope="col">Nombre</th>
+			<th scope="col">Correo</th>
+			<th scope="col">Contraseña</th>
+		</tr>
+		<tr>
+			<th scope="row">{{users.codigo}}</th>
+			<td>{{users.nombre}}</td>
+			<td>{{users.email}}</td>
+			<td>{{users.password}}</td>
+		</tr>
+	</table>
+</body>
+</html>
