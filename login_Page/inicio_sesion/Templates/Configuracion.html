@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuracion</title>
+	{% load static %}
+    <link rel="stylesheet" href="{%static 'vendors/themify-icons/css/themify-icons.css'%}">
+    <link rel="stylesheet" href="{% static 'css/foodhut.css'%}">
+</head>
+<body>
+	<div class="container">
+		<div class="row justify-content-center">
+		  <div class="col-md-6">
+			<form method="post" action="{% url 'actualizar_u' %}">
+			  <h1 class="text-center mb-5">Configuracion</h1>
+			  <div class="form-group">
+				<label for="name">Nombre:</label>
+				<input type="text" name="Nom_user" class="form-control" id="name" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios" value="{{Usuario.nombre}}"/>
+			  </div>
+			  <div class="form-group">
+				<label for="email">Correo:</label>
+				<input type="email" name="Email_user" class="form-control" id="email" value="{{Usuario.email}}"/>
+			  </div>
+			  <div class="form-group">
+				<input type="hidden" name="Pass_user" class="form-control" id="password" value="{{Usuario.password}}"/>
+			  </div>
+			  <hr class="my-4">
+			  <div class="form-group">
+				<div class="custom-control custom-switch">
+				  <input type="checkbox" class="custom-control-input" id="updatePassword" onchange="togglePasswordFields()">
+				  <label class="custom-control-label" for="updatePassword">Actualizar contraseña</label>
+				</div>
+			  </div> 
+				<div class="form-group">
+					<label for="newPassword">Nueva contraseña</label>
+					<input type="password" name="New_pass" class="form-control" id="newPassword" disabled>
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword">Confirmar contraseña</label>
+					<input type="password" name="Con_pass" class="form-control" id="confirmPassword" disabled>
+				</div>
+			  <button type="submit" class="btn btn-primary btn-block" onclick="validatePassword()">Guardar Cambios</button>
+			</form>
+		  </div>
+		</div>
+	  </div>
+</body>
+	<script src="{% static 'js/ventana_emergente.js'%}"></script>
+	<script src="{%static 'vendors\bootstrap\bootstrap.js'%}"></script>
+   	<script src="{%static 'vendors\jquery\jquery-3.4.1.js'%}"></script>
+	<script>
+        function togglePasswordFields() {
+            var newPasswordField = document.getElementById('newPassword');
+            var confirmPasswordField = document.getElementById('confirmPassword');
+            var updatePasswordSwitch = document.getElementById('updatePassword');
+            
+            if (updatePasswordSwitch.checked) {
+                newPasswordField.disabled = false;
+                confirmPasswordField.disabled = false;
+            } else {
+                newPasswordField.disabled = true;
+                confirmPasswordField.disabled = true;
+            }
+        }
+
+		function validatePassword() {
+			const newPasswordField = document.getElementById('newPassword');
+			const confirmPasswordField = document.getElementById('confirmPassword');
+			
+			if (newPasswordField.value !== confirmPasswordField.value) {
+				alert("Las contraseñas no coinciden. Por favor, asegúrese de que las contraseñas sean iguales.");
+			}
+    	}
+    </script>
+</html>

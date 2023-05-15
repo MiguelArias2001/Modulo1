@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <title>Cambio de Contraseña</title>
+</head>
+<body>
+<div class="container" id="container">
+	<div class="form-container sign-in-container">
+		{% csrf_token %}
+		<form method="post" action="{% url 'chg_pass' %}">
+			<h1>Cambio de Contraseña</h1>
+            <input type="password" name="Nueva_Contrasena" placeholder="Nueva Contraseña" />
+            <input type="password" name="Rep_Contrasena" placeholder="Repita la Contraseña" />
+			<button>Actualizar</button>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-right">
+                <h1>¡Ahora puedes volver a Iniciar Sesion!</h1>
+				<p>Vuelve a la pagina de login para Ingresar.</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% if res %}
+<div id="popup" class="popup">
+	<div class="popup-content">
+		<span class="close" onclick="cerrarVentana()">&times;</span>
+		<h2>ERROR</h2>
+		<p>{{Mensaje}}</p>
+	</div>
+</div>
+{% endif %}
+</body>
+<script src="{% static 'js/ventana_emergente.js'%}"></script>
+</html>

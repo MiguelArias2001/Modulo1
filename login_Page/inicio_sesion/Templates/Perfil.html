@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'vendors/themify-icons/css/themify-icons.css'%}">
+    <link rel="stylesheet" href="{% static 'css/foodhut.css'%}">
+</head>
+<body>
+    <div class="container">
+        <div class="card tarjeta_perfil">
+            <div class="card-header  mx-auto">
+                <div class="card-img-top d-flex justify-content-center align-items-center">
+                    <img src="{% static 'imgs/Avatar.png'%}" alt="Avatar" class="circular--profile img-fluid">
+                    <!--
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <label for="cargar-avatar" class="cambiar-avatar"><i class="ti-camera"></i></label>
+                            <input type="file" id="cargar-avatar" style="display:none">
+                        </form>
+                    -->
+                </div>
+                <h1 class="card-title text-primary">{{Usuario.nombre}}</h1>
+            </div>
+            <div class="card-body mx-auto">
+                <p class="card-text text-warning"><strong>Correo electrónico: </strong>{{Usuario.email}}</p>
+                <p class="card-text text-warning"><strong>Código de usuario: </strong>{{Usuario.codigo}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+</html>

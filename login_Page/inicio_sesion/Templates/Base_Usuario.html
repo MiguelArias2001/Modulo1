@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido {{Usuario.nombre}}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'css/foodhut.css'%}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary rounded shadow mb-3">
+        <div class="container">
+           <a class="navbar-brand" href="{% url 'perfil_u' %}" target="miiframe">{{Usuario.nombre}}</a>
+           <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+           </button>
+           <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto"> 
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'foro' %}" target="miiframe">Foro</a>
+                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'chat' %}" target="miiframe">Chat</a>
+                 </li>
+                 <li class="nav-item">
+                    <div class="dropdown d-inline-block">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" aria-expanded="true">
+                            <a class="dropdown-item" href="{% url 'config_u' %}" target="miiframe">Configuracion</a>
+                            <a class="dropdown-item" href="{% url 'index' %}">Cerrar Sesion</a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item text-primary" href="#" onclick="toggleDiv()">Eliminar Cuenta</a>
+                        </div>
+                    </div>
+                 </li>
+              </ul>                       
+           </div>
+        </div>
+    </nav>
+    <div>
+       <iframe id="Ventana" src="{% url 'perfil_u' %}" name="miiframe"></iframe> 
+    </div>
+      <div id="popup" class="popup mx-auto justify-content-center align-items-center" style="display: none;">
+         <div class="card text-center mb-3">
+            <div class="card-header bg-transparent">
+               <span class="close" onclick="cerrarVentana()">&times;</span>
+               <h2 class="card-title text-primary">Advertencia</h2>
+            </div>
+            <div class="popup-content card-body">
+               <p class="card-text text-danger">¿Esta seguro de querer eliminar la cuenta?</p>
+            </div>
+            <div class="card-footer bg-transparent">
+               <a href="#" class="btn btn-secondary" onclick="cerrarVentana()">Cerrar</a>
+               <a href="{% url 'eliminar_u' %}" class="btn btn-primary">Eliminar Cuenta</a>
+            </div>
+         </div>
+      </div>
+    <script src="{%static 'vendors/bootstrap/bootstrap.bundle.min.js'%}"></script>
+    <script src="{%static 'vendors/jquery/jquery-3.4.1.min.js'%}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+    <script>
+      function toggleDiv() {
+         var div = document.getElementById('popup');
+         var iframe = document.getElementById('Ventana');
+         if (div.style.display == 'none') {
+            iframe.style.display = 'none';
+            div.style.display = 'flex';
+         } else {
+            iframe.style.display = 'initial';
+            div.style.display = 'none';
+         }
+         }
+      function cerrarVentana() {
+         var div = document.getElementById('popup');
+         var iframe = document.getElementById('Ventana');
+         div.style.display = 'none';
+         iframe.style.display = 'initial';
+         }
+    </script>
+</body>
+</html>

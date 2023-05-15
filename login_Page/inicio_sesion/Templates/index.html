@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="spa">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Pagina de prueba de Chat-ud">
+    <meta name="author" content="Devcrud">
+    <title>Chat-UD</title>
+   
+    <!-- font icons -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'vendors/themify-icons/css/themify-icons.css'%}">
+
+    <link rel="stylesheet" href="{% static 'vendors/animate/animate.css'%}">
+    
+    <!-- Bootstrap + FoodHut main styles -->
+	<link rel="stylesheet" href="{% static 'css/foodhut.css'%}">
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    
+    <!-- Navbar -->
+    <nav class="custom-navbar navbar navbar-expand-lg navbar-dark fixed-top" data-spy="affix" data-offset-top="10">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#inicio">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#Proyecto">Proyecto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#Nosotros">Nosotros</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#Datos">Contactanos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'login'%}" class="btn btn-primary ml-xl-4">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- header -->
+    <header id="inicio" class="header">
+        <div class="overlay text-white text-center">
+            <h1 class="display-2 font-weight-bold my-3">Chat-UD</h1>
+            <h2 class="display-4 mb-5">Un bot a tu servicio</h2>
+            <a class="btn btn-lg btn-primary" href="#Proyecto">Conoce el Proyecto</a>
+        </div>
+    </header>
+
+    <!--  About Section  -->
+    <div id="Proyecto" class="container-fluid wow fadeIn" id="about"data-wow-duration="1.5s">
+        <div class="row">
+            <div class="col-lg-6 has-img-bg"></div>
+            <div class="col-lg-6">
+                <div class="row justify-content-center">
+                    <div class="col-sm-8 py-5 my-5">
+                        <h2 class="mb-4">Proyecto</h2>
+                        <p>El proyecto consiste en crear un chat bot de question answering que pueda ayudar a los estudiantes de la Universidad Francisco José de Caldas a obtener información sobre la normativa del proyecto curricular de sistematización de datos de la universidad. Para lograr esto, se utilizará la técnica de finetuning, que implica entrenar un modelo de lenguaje pre-entrenado con datos específicos del dominio, en este caso, los documentos en PDF proporcionados por la universidad.</p>
+                        <p><b>El objetivo final del proyecto es crear una herramienta útil y eficiente que ayude a los estudiantes y profesores a obtener la información necesaria sobre la normativa del proyecto curricular de sistematización de datos de la Universidad Francisco José de Caldas, de una manera rápida y sencilla.</b></p>
+                        <p>El chat bot estará diseñado para responder preguntas específicas sobre la normativa del proyecto curricular, como por ejemplo, requisitos de admisión, planes de estudio, políticas de evaluación, entre otros temas relevantes. El bot deberá ser capaz de interpretar las preguntas en lenguaje natural y proporcionar respuestas precisas y útiles basadas en la información disponible en los documentos de la normativa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REVIEWS Section  -->
+    <div id="Nosotros" class="container-fluid wow fadeIn bg-dark text-light has-height-lg middle-items">
+        <h2 class="section-title my-5 text-center">Equipo</h2>
+        <div class="row mt-3 mb-5">
+            <div class="col-md-4 my-3 my-md-0">
+                <div class="testmonial-card">
+                    <img class="circular--square" src="{% static 'imgs/miguel.png'%}" />
+                    <h3 class="testmonial-title">Miguel Arias</h3>
+                    <h6 class="testmonial-subtitle">20181578058</h6>
+                    <div class="testmonial-body">
+                        <p>Soy estudiante de sistematizacion de datos de sexto semestre, Tengo habilidades en en los lenguajes de programacion Java, C# y python</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 my-3 my-md-0">
+                <div class="testmonial-card">
+                    <img class="circular--square" src="{% static 'imgs/duvan.jpg'%}" />
+                    <h3 class="testmonial-title">Duvan Riaño</h3>
+                    <h6 class="testmonial-subtitle">20181578070</h6>
+                    <div class="testmonial-body">
+                        <p>Soy estudiante de sistematización de datos de 6 semestre, actualmente cuento con experiencia en Java, Javascript, kotlin y C#</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 my-3 my-md-0">
+                <div class="testmonial-card">
+                    <img class="circular--square" src="{% static 'imgs/jhonatan.jpg'%}" />
+                    <h3 class="testmonial-title">Jhonatan Perez</h3>
+                    <h6 class="testmonial-subtitle">20192578033</h6>
+                    <div class="testmonial-body">
+                        <p>Mi nombre es jhonatan Pérez, tengo 21 años y me encuentro culminando la carrera de sistematización de datos, me gusta analizar y aprender lenguajes y aplicaciones que surgen</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- page footer  -->
+    <div id="Datos" class="container-fluid bg-dark text-light has-height-md middle-items border-top text-center wow fadeIn">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Nuestros Emails</h3>
+                <P class="text-muted">maariast@udistrital.edu.co</P>
+                <P class="text-muted">ddrianos@udistrital.edu.co</P>
+                <P class="text-muted">jhcperezo@udistrital.edu.co</P>
+            </div>
+            <div class="col-sm-4">
+                <h3></h3>
+                <P class="text-muted"></P>
+                <P class="text-muted"></P>
+                <P class="text-muted"></P>
+            </div>
+            <div class="col-sm-4">
+                <h3>Nuestros Codigos</h3>
+                <P class="text-muted">20181578058</P>
+                <P class="text-muted">20181578070</P>
+                <P class="text-muted">20192578033</P>
+            </div>
+        </div>
+    </div>
+    <div class="bg-dark text-light text-center border-top wow fadeIn">
+        <p class="mb-0 py-3 text-muted small">&copy; Copyright <script>document.write(new Date().getFullYear())</script> Made with <i class="ti-heart text-danger"></i> By <a href="http://devcrud.com">DevCRUD</a></p>
+    </div>
+    <!-- end of page footer -->
+
+	<!-- core  -->
+    <script src="{% static 'vendors/jquery/jquery-3.4.1.js'%}"></script>
+    <script src="{% static 'vendors/bootstrap/bootstrap.bundle.js'%}"></script>
+
+    <!-- bootstrap affix -->
+    <script src="{% static 'vendors/bootstrap/bootstrap.affix.js'%}"></script>
+
+    <!-- wow.js -->
+    <script src="{% static 'vendors/wow/wow.js'%}"></script>
+    
+    <!-- FoodHut js -->
+    <script src="{% static 'js/foodhut.js'%}"></script>
+
+</body>
+</html>
