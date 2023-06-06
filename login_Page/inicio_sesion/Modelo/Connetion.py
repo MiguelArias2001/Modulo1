@@ -44,10 +44,32 @@ class Connection:
         if self.conn.is_connected() == False:
              self.conn.reconnect()
         cursor = self.conn.cursor(buffered=True)
+        print(cursor)
         try:
             cursor.execute(query, params, multi=True)
             print(cursor)
             result = cursor.fetchone()
+            print(result)
+        except Error as err:
+            print(err)
+            result = None
+        finally:
+            cursor.close()
+            self.conn.close()
+        return result
+    
+    def execute_querys(self, query: str, params: tuple):
+        if not self.conn:
+            raise Exception("La conexión a la base de datos no se ha establecido correctamente.")
+        if self.conn.is_connected() == False:
+             self.conn.reconnect()
+        cursor = self.conn.cursor(buffered=True)
+        print(cursor)
+        try:
+            cursor.execute(query, params, multi=True)
+            print(cursor)
+            result = cursor.fetchall()
+            print(result)
         except Error as err:
             print(err)
             result = None

@@ -1,9 +1,11 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from inicio_sesion.Modelo.Usuario import Usuario
 from inicio_sesion.Modelo.Usuario_DAO import UsuarioDTO
 from inicio_sesion.Modelo.Correo import Correo
+import matplotlib.pyplot as plt
+import io
+import urllib.parse, base64
 
 #Carga de las vistas de los templates
 def error_404(request, exception):
@@ -32,6 +34,48 @@ def base_usuario(request):
 
 def foro(request):
     return render(request,'Foro.html')
+
+def vista_usuarios(request):
+    usuario = Usuario(None,"","","")
+    met = UsuarioDTO()
+    users = met.view_users(usuario)
+    return render(request,'Vista_usuarios.html',{'usuarios': users})
+
+def archivo(request):
+    met = UsuarioDTO()
+    arch = met.Ver_archivo()
+    return render(request,'Archivos.html',{"arch":arch})
+
+def reporte(request):
+    met = UsuarioDTO()
+    registro = met.Register()
+    Data = met.Grafico()
+
+    meses = [d['Mes'] for d in Data]
+    visitas = [d['Visitas'] for d in Data]
+
+    fig, ax = plt.subplots()
+
+    # Crea el gráfico de barras usando los datos extraídos
+    ax.bar(meses, visitas)
+
+    # Estiliza el gráfico según tus preferencias
+    ax.set_xlabel('Mes')
+    ax.set_ylabel('Visitas')
+    ax.set_title('Visitas por Mes')
+
+    # Guarda el gráfico en un buffer
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    
+
+    return render(request,'Reportes.html',{'registro': registro, 'chart': uri})
+
+def base_administrador(request):
+    return render(request,'Base_Administrador.html')
 
 def Config_user(request):
     codigo = request.COOKIES.get('codigo')
@@ -68,13 +112,24 @@ def user_session(request):
         met = UsuarioDTO()
         res = met.search_user(user)
         codigo = met.search_code(user)
-        if res[0] == 1: #type: ignore
-            print(res)
-            response = redirect('usuarios')
-            response.set_cookie('codigo', codigo[0])#type: ignore
-            response.set_cookie('existencia', res[0])#type: ignore
-            del user
-            del met
+        if res is not None: #type: ignore
+            if res[0] == 1:
+                print(res)
+                response = redirect('usuarios')
+                response.set_cookie('codigo', codigo[0])#type: ignore
+                response.set_cookie('admin', 0)#type: ignore
+                del user
+                del met
+            elif res[0] == 2: #type: ignore
+                print(res)
+                response = redirect('administrador')
+                response.set_cookie('codigo', codigo[0])#type: ignore
+                response.set_cookie('existencia', 1)#type: ignore
+                del user
+                del met
+            else:
+                context = {'res': True,'Mensaje':"la contraseña o el usuario no es correcto"}
+                response = render(request,"login.html",context)
         else:
             context = {'res': True,'Mensaje':"la contraseña o el usuario no es correcto"}
             response = render(request,"login.html",context)
@@ -159,6 +214,17 @@ def Delete_Acount(request):
     return response
 
 @csrf_exempt
+def Delete_Acount_Admin(request):
+    if request.method == 'GET':
+        codigo = request.GET.get('codigo')
+        user = Usuario(codigo,"","","")
+        met = UsuarioDTO()
+        print(met.delete_user(user))
+         
+    response = redirect('visualizar_u')
+    return response
+
+@csrf_exempt
 def Update_User(request):
     if request.method == 'POST':
         nombre = request.POST.get('Nom_user')
@@ -185,3 +251,96 @@ def Update_User(request):
             response = redirect('config_u')
     return response # type: ignore
 
+
+@csrf_exempt
+def buscar_nombre(request):
+    nombre = request.POST.get('bus_nom')
+    usuario = Usuario(None,nombre,"","")
+    met = UsuarioDTO()
+    users = met.search_users_name(usuario)
+    return render(request,'Vista_usuarios.html',{'usuarios': users})
+
+@csrf_exempt
+def buscar_codigo(request):
+    codigo = request.POST.get('bus_cod')
+    usuario = Usuario(codigo,"","","")
+    met = UsuarioDTO()
+    users = met.search_users_code(usuario)
+    return render(request,'Vista_usuarios.html',{'usuarios': users})
+
+@csrf_exempt
+def buscar_Filter(request):
+    op = request.POST.get('opcion')
+    ac = request.POST.get('Opciones')
+    filtro = 0
+    Activo = 0
+    if op == "fecha":
+        filtro = 1
+    elif op == "nombre":
+        filtro = 2
+    else:
+        filtro = 3
+    
+    if ac == "Activo":
+        Activo = 1
+    elif ac == "Inactivo":
+        Activo = 0
+    else:
+        Activo = 2
+    print("Resultado:"+ ac)    
+    met = UsuarioDTO()
+    users = met.search_users_filter(Activo,filtro)
+    return render(request,'Vista_usuarios.html',{'usuarios': users})
+
+@csrf_exempt
+def subir_archivo(request):
+    Nombre = request.POST.get("Nombre_a")
+    Descripcion = request.POST.get('Descripcion_a','')
+    Archivo = request.FILES['archivo']
+    codigo = request.COOKIES.get('codigo')
+
+    contenido = Archivo.read()
+
+    try:
+        # Intenta decodificar el contenido como UTF-8
+        contenido_decodificado = contenido.decode('utf-8')
+    except UnicodeDecodeError:
+        # Si la decodificación como UTF-8 falla, intenta con Latin-1
+        contenido_decodificado = contenido.decode('latin-1')
+
+    met = UsuarioDTO()
+    met.Insertar_archivo(Nombre,Descripcion,contenido_decodificado,codigo)
+    arch = met.Ver_archivo()
+    return render(request,'Archivos.html',{"arch":arch})
+
+@csrf_exempt
+def actualizar_archivo(request):
+    codigo = request.POST.get("codigo")
+    print(codigo)
+    met = UsuarioDTO()
+    met.Actualizar_Archivo(codigo,1)
+    arch = met.Ver_archivo()
+    return render(request,'Archivos.html',{"arch":arch})
+
+@csrf_exempt
+def Filtrar_archivos(request):
+    op = request.POST.get("status")
+    met = UsuarioDTO()
+    if op == "no-leido":
+        arch = met.Filtro_Archivo(0)
+    elif op == "leido":
+        arch = met.Filtro_Archivo(1)
+    elif op == "Todo":
+        arch = met.Ver_archivo()
+    else:
+        arch = met.Ver_archivo()
+    return render(request,'Archivos.html',{"arch":arch})
+
+@csrf_exempt
+def Eliminar_archivo(request):
+    codigo = request.POST.get("codigo")
+    print(codigo)
+    met = UsuarioDTO()
+    met.Eliminar_archivo(codigo)
+    arch = met.Ver_archivo()
+    return render(request,'Archivos.html',{"arch":arch})

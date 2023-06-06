@@ -4,6 +4,8 @@ class Usuario:
         self.nombre = nombre
         self.email = correo
         self.password = contraseña
+        self.activo = None
+        self.fecha = None
 
     def get_codigo(self):
         return self.codigo
@@ -28,6 +30,18 @@ class Usuario:
 
     def set_password(self, password):
         self.password = password
+
+    def set_activo(self, activo):
+        self.activo = activo
+
+    def get_activo(self):
+        return self.activo   
+    
+    def set_fecha(self, fecha):
+        self.fecha = fecha
+
+    def get_fecha(self):
+        return self.fecha  
 
     def to_string(self):
         return "Usuario("+str(self.codigo)+", "+self.nombre+", "+self.email+", "+self.password+")"
