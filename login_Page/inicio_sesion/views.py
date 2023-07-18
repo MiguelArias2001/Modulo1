@@ -87,10 +87,13 @@ def Config_user(request):
 
 def perfil_usuario(request):
     codigo = request.COOKIES.get('codigo')
+    admin: int
+    admin = request.COOKIES.get('admin')
     usuario = Usuario(codigo,"","","")
     met = UsuarioDTO()
     user = met.charge_user(usuario)
-    context = {'Usuario': user}
+    context = {'Usuario': user, 'admin': admin}
+    print(context)
     return render(request,'Perfil.html',context)
 
 #Acciones de las vistas
@@ -111,20 +114,20 @@ def user_session(request):
         user = Usuario("","",correo,contra)
         met = UsuarioDTO()
         res = met.search_user(user)
+        dec: int
+        dec = res[0] #type: ignore
         codigo = met.search_code(user)
         if res is not None: #type: ignore
-            if res[0] == 1:
-                print(res)
+            if dec == 1:
                 response = redirect('usuarios')
                 response.set_cookie('codigo', codigo[0])#type: ignore
                 response.set_cookie('admin', 0)#type: ignore
                 del user
                 del met
-            elif res[0] == 2: #type: ignore
-                print(res)
+            elif dec == 2: 
                 response = redirect('administrador')
                 response.set_cookie('codigo', codigo[0])#type: ignore
-                response.set_cookie('existencia', 1)#type: ignore
+                response.set_cookie('admin', 1)#type: ignore
                 del user
                 del met
             else:

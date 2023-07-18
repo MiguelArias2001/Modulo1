@@ -139,7 +139,7 @@ class UsuarioDTO:
         result = self.db.execute_query(self._SQL_REGISTER,()) #type: ignore
         Registros = []
         if result is not None:
-            activo, inactivo, archivo, foro = result
+            activo, inactivo, archivo, foro = result #type: ignore
             Registros = [activo,inactivo,archivo,foro]
         return Registros
     

@@ -6,12 +6,15 @@ class Connection:
     _instance = None
 
     def __init__(self):
+
+        self.conn = None
+
         if Connection._instance != None:
             raise Exception("La coneccion ya esta en uso")
         else:
             try:
                 config = configdb.ConfigParser()
-                config.read('Modulo1/login_Page/inicio_sesion/Modelo/config.ini')
+                config.read('login_Page/inicio_sesion/Modelo/config.ini')
                 print(config.sections())
                 Connection._instance = self
                 mysql_config = config['MySQL']

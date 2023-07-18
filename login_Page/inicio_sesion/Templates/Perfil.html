@@ -14,7 +14,7 @@
         <div class="card tarjeta_perfil">
             <div class="card-header  mx-auto">
                 <div class="card-img-top d-flex justify-content-center align-items-center">
-                    {% if existencia == 0 %}
+                    {% if admin == '0' %}
                     <img src="{% static 'imgs/Avatar.png'%}" alt="Avatar" class="circular--profile img-fluid">
                     {% else %}
                     <img src="{% static 'imgs/Admin.png'%}" alt="Avatar" class="circular--profile img-fluid">
@@ -23,7 +23,7 @@
                 <h1 class="card-title text-primary">{{Usuario.nombre}}</h1>
             </div>
             <div class="card-body mx-auto">
-                {% if existencia != 0 %}
+                {% if admin == '1' %}
                 <h3 class="card-title text-primary">Administrador</h3>
                 {% endif %}
                 <p class="card-text text-warning"><strong>Correo electrónico: </strong>{{Usuario.email}}</p>
